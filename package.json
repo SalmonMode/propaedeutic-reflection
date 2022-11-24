@@ -1,0 +1,49 @@
+{
+  "name": "propaedeutic-reflection",
+  "version": "0.1.0",
+  "description": "Self reflection with anonymized peer insight.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "test": "nyc mocha --recursive ./dist/",
+    "test:ci": "nyc mocha --recursive ./dist/ --reporter mocha-junit-reporter"
+  },
+  "nyc": {
+    "extension": [
+      ".ts",
+      ".tsx"
+    ],
+    "exclude": [
+      "**/*.d.ts",
+      "**/*.spec.ts",
+      "coverage"
+    ],
+    "reporter": [
+      "text",
+      "html",
+      "cobertura"
+    ],
+    "all": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SalmonMode/propaedeutic-reflection"
+  },
+  "author": "Chris NeJame",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^18.11.9",
+    "chai": "^4.3.7",
+    "mocha": "^10.1.0",
+    "mocha-junit-reporter": "^2.2.0",
+    "nyc": "^15.1.0",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.4.1",
+    "typescript": "^4.9.3"
+  }
+}
