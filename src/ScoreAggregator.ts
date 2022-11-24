@@ -1,9 +1,25 @@
 import { NoSelfAssessmentsError } from "./Errors";
-import { AverageScore, RelativeSelfAssessment, SelfAssessment } from "./types";
+import {
+  AverageScore,
+  RelativeSelfAssessment,
+  SelfAssessment,
+  SkillArea,
+} from "./types";
 
 export default class ScoreAggregator {
   public selfAssessments: SelfAssessment[];
-  constructor(...selfAssessments: SelfAssessment[]) {
+  /**
+   * A new instance of the {@link ScoreAggregator} class.
+   *
+   * Tracks individual {@link SelfAssessment} as well as provides {@link RelativeSelfAssessment} and an average score
+   * for a given {@link SkillArea}.
+   *
+   * @param selfAssessments The {@link SelfAssessment} objects the include in the aggregate
+   */
+  constructor(
+    public skillArea: SkillArea,
+    ...selfAssessments: SelfAssessment[]
+  ) {
     this.selfAssessments = selfAssessments;
   }
 
