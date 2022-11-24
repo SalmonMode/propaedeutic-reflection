@@ -9,6 +9,8 @@ export default class ScoreAggregator {
 
   /**
    * The average score of all the {@link SelfAssessment} objects provided.
+   *
+   * @throws {@link NoSelfAssessmentsError} when no {@link SelfAssessment} objects are available
    */
   get averageScore(): AverageScore {
     if (this.selfAssessments.length === 0) {
