@@ -1,13 +1,11 @@
 import { NoSelfAssessmentsError } from "./Errors";
-import {
-  AverageScore,
-  RelativeSelfAssessment,
-  SelfAssessment,
-  SkillArea,
-} from "./types";
+import RelativeSelfAssessment from "./RelativeSelfAssessment";
+import SelfAssessment from "./SelfAssessment";
+import SkillArea from "./SkillArea";
+import { AverageScore } from "./types";
 
-export default class ScoreAggregator {
-  public selfAssessments: SelfAssessment[];
+export default class ScoreAggregator<SkillAreaDescription extends string> {
+  public selfAssessments: SelfAssessment<SkillAreaDescription>[];
   /**
    * A new instance of the {@link ScoreAggregator} class.
    *
@@ -17,8 +15,8 @@ export default class ScoreAggregator {
    * @param selfAssessments The {@link SelfAssessment} objects the include in the aggregate
    */
   constructor(
-    public skillArea: SkillArea,
-    ...selfAssessments: SelfAssessment[]
+    public skillArea: SkillArea<SkillAreaDescription>,
+    ...selfAssessments: SelfAssessment<SkillAreaDescription>[]
   ) {
     this.selfAssessments = selfAssessments;
   }
@@ -48,11 +46,8 @@ export default class ScoreAggregator {
    * @returns a {@link RelativeSelfAssessment} object containing the original {@link SelfAssessment} details along with the average score.
    */
   getRelativeSelfAssessment(
-    selfAssessment: SelfAssessment
-  ): RelativeSelfAssessment {
-    return {
-      ...selfAssessment,
-      averageScore: this.averageScore,
-    };
+    selfAssessment: SelfAssessment<SkillAreaDescription>
+  ): RelativeSelfAssessment<SkillAreaDescription> {
+    return new RelativeSelfAssessment(selfAssessment, this.averageScore);
   }
 }
