@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// A single user.
+model User {
+  id              Int              @id @default(autoincrement())
+  name            String?
+  selfAssessments SelfAssessment[]
+}
+
+enum Score {
+  ZERO
+  ONE
+  TWO
+  THREE
+  FOUR
+  FIVE
+  SIX
+  SEVEN
+  EIGHT
+  NINE
+  TEN
+}
+
+/// An area of skill a person can rate themselves on.
+model SkillArea {
+  id              Int              @id @default(autoincrement())
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  description     String           @db.VarChar(255)
+  selfAssessments SelfAssessment[]
+}
+
+/// How someone has rated themselves on a scale of 0-10.
+model SelfAssessment {
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  score       Score
+  user        User      @relation(fields: [userId], references: [id])
+  userId      Int
+  skillArea   SkillArea @relation(fields: [skillAreaId], references: [id])
+  skillAreaId Int
+
+  @@id([userId, skillAreaId])
+  @@unique([userId, skillAreaId])
+}

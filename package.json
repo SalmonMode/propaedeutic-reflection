@@ -1,6 +1,6 @@
 {
   "name": "propaedeutic-reflection",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Self reflection with anonymized peer insight.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -32,18 +32,31 @@
   },
   "author": "Chris NeJame",
   "license": "MIT",
-  "dependencies": {},
   "devDependencies": {
     "@types/chai": "^4.3.4",
+    "@types/chai-as-promised": "^7.1.5",
+    "@types/express": "^4.17.14",
     "@types/mocha": "^10.0.0",
     "@types/node": "^18.11.9",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.9",
+    "@types/sinon": "^10.0.13",
     "chai": "^4.3.7",
+    "chai-as-promised": "^7.1.1",
     "mocha": "^10.1.0",
     "mocha-junit-reporter": "^2.2.0",
+    "node-mocks-http": "^1.12.1",
     "nyc": "^15.1.0",
+    "prisma": "^4.6.1",
+    "sinon": "^14.0.2",
     "source-map-support": "^0.5.21",
     "ts-node": "^10.9.1",
     "tslib": "^2.4.1",
     "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^4.6.1",
+    "express": "^4.18.2",
+    "next": "^13.0.5"
   }
 }
