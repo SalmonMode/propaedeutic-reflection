@@ -164,19 +164,17 @@ describe("/api/skillArea", function () {
         expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal([]);
       });
     });
-    describe("Undefined Method (invalid HTTP Method)", function () {
+    describe("Unhandled Error", function () {
       let sandbox: Sinon.SinonSandbox;
-      let client: PrismaClientSkillAreaFindMany;
       let getPrismaStub: Sinon.SinonStub;
       let req: NextApiRequest;
       let res: NextApiResponse;
       before(async function () {
         sandbox = Sinon.createSandbox();
         getPrismaStub = sandbox.stub(contextMod, "getPrismaClient");
-        getPrismaStub.returns(client);
+        getPrismaStub.throws(new Error());
         const mockedReq = mockRequestResponse();
         req = mockedReq.req;
-        req.method = undefined;
         res = mockedReq.res;
       });
       after(async function () {
@@ -186,6 +184,38 @@ describe("/api/skillArea", function () {
         await expect(skillAreaHandler(req, res)).to.eventually.be.rejectedWith(
           Error
         );
+      });
+    });
+    describe("Undefined Method (invalid HTTP Method)", function () {
+      let sandbox: Sinon.SinonSandbox;
+      let client: PrismaClientSkillAreaFindMany;
+      let getPrismaStub: Sinon.SinonStub;
+      let req: NextApiRequest;
+      let res: NextApiResponse;
+      let resJsonStub: Sinon.SinonStub;
+      let resStatusStub: Sinon.SinonStub;
+      before(async function () {
+        sandbox = Sinon.createSandbox();
+        getPrismaStub = sandbox.stub(contextMod, "getPrismaClient");
+        getPrismaStub.returns(client);
+        const mockedReq = mockRequestResponse();
+        req = mockedReq.req;
+        req.method = undefined;
+        res = mockedReq.res;
+        resJsonStub = sandbox.stub(res, "json");
+        resStatusStub = sandbox.stub(res, "status");
+        await skillAreaHandler(req, res);
+      });
+      after(async function () {
+        sandbox.restore();
+      });
+      it("have set response JSON to error", async function () {
+        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+          error: "Method undefined Not Allowed",
+        });
+      });
+      it("have set response Status Code to 405", async function () {
+        expect(resStatusStub.getCalls()[0].args[0]).to.equal(405);
       });
     });
     describe("WEIRD (invalid HTTP Method)", function () {

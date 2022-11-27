@@ -14,10 +14,12 @@ export class SkillAreaNotFoundError extends RangeError {
 /**
  * This is thrown when an unsupported HTTP Method is used.
  */
-export class InvalidHttpMethodError extends Error {
+export class InvalidHttpMethodError<
+  T extends string | undefined
+> extends Error {
   constructor(
     public supportedMethods: HttpMethod[],
-    public methodUsed: string,
+    public methodUsed: T,
     message?: string
   ) {
     super(message);

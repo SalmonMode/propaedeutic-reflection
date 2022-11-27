@@ -3,6 +3,12 @@ import { getPrismaClient } from "../../../getPrismaClient";
 import { SkillAreaSummary } from "../../../types";
 import { getSkillArea } from "./getSkillArea";
 
+/**
+ * Handle a request for getting a specific SkillArea.
+ * 
+ * @param response The outgoing response
+ * @param skillAreaId The ID of the specific SkillArea to get
+ */
 export async function handleGetSkillArea(
   response: NextApiResponse<SkillAreaSummary>,
   skillAreaId: number

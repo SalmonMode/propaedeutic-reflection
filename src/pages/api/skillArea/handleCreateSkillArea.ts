@@ -4,10 +4,20 @@ import { assertIsCreateNewSkillArea } from "../../../typePredicates";
 import { SkillAreaSummary } from "../../../types";
 import { createSkillArea } from "./createSkillArea";
 
+/**
+ * Handle a request to create a new SkillArea.
+ *
+ * @throws {@link TypeError} Thrown when the provided description is incompatible with a SkillArea description.
+ *
+ * @param request The incoming request
+ * @param response The outgoing response
+ *
+ * @returns A summary of the SkillArea ID that was found
+ */
 export async function handleCreateSkillArea(
   request: NextApiRequest,
   response: NextApiResponse<SkillAreaSummary>
-) {
+): Promise<void> {
   assertIsCreateNewSkillArea(request.body);
   const {
     body: { description },

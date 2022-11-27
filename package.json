@@ -1,12 +1,12 @@
 {
   "name": "propaedeutic-reflection",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Self reflection with anonymized peer insight.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "npx tsc",
-    "test": "nyc mocha --recursive ./dist/",
+    "test": "nyc mocha --recursive ./src/",
     "test:ci": "nyc mocha --recursive ./dist/ --reporter mocha-junit-reporter"
   },
   "nyc": {
