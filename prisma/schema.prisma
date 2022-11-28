@@ -17,6 +17,7 @@ model User {
   selfAssessments SelfAssessment[]
 }
 
+// Limiting the score to an enum to ensure only integers from 0 to 10 can be used.
 enum Score {
   ZERO
   ONE
