@@ -47,13 +47,13 @@ describe("/api/skillArea", function () {
       let resJsonStub: Sinon.SinonStub;
       const skillArea1: SkillArea = {
         createdAt: new Date(),
-        description: "Some",
+        description: expectedCreationDescription,
         id: 123,
         updatedAt: new Date(),
       };
       const skillArea2: SkillArea = {
         createdAt: new Date(),
-        description: "Some",
+        description: expectedCreationDescription,
         id: 456,
         updatedAt: new Date(),
       };
@@ -263,7 +263,7 @@ describe("/api/skillArea", function () {
       let resJsonStub: Sinon.SinonStub;
       const skillArea: SkillArea = {
         createdAt: new Date(),
-        description: "Some",
+        description: expectedCreationDescription,
         id: 123,
         updatedAt: new Date(),
       };

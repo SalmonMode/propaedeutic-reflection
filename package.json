@@ -8,6 +8,8 @@
     "dev": "next dev",
     "build": "npx tsc",
     "test": "nyc mocha --recursive ./src/",
+    "test:unit": "nyc mocha --recursive ./src/ -g 'Integration' -i",
+    "test:integration": "nyc mocha --recursive ./src/ -g 'Integration'",
     "test:ci": "nyc mocha --recursive ./dist/ --reporter mocha-junit-reporter"
   },
   "nyc": {
@@ -18,7 +20,9 @@
     "exclude": [
       "**/*.d.ts",
       "**/*.spec.ts",
-      "coverage"
+      "coverage",
+      ".next",
+      "next.config.js"
     ],
     "reporter": [
       "text",
