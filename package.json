@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "dev": "next dev",
     "build": "npx tsc",
     "test": "nyc mocha --recursive ./src/",
     "test:ci": "nyc mocha --recursive ./dist/ --reporter mocha-junit-reporter"

@@ -1,6 +1,6 @@
 import { Prisma, SkillArea } from "@prisma/client";
 import * as chai from "chai";
-import * as chaiAsPromised from "chai-as-promised";
+import ChaiAsPromised from "chai-as-promised";
 import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import * as Sinon from "sinon";
@@ -10,12 +10,11 @@ import * as getSkillMod from "./getAllSkillAreas";
 import * as handleGetMod from "./handleGetAllSkillAreas";
 import * as createSkillMod from "./createSkillArea";
 import * as handleCreateMod from "./handleCreateSkillArea";
-// import { allSkillAreasHandler } from "./allSkillAreasHandler";
 import { skillAreaHandler } from "./skillAreaHandler";
 
 var expect = chai.expect;
 
-chai.use(chaiAsPromised);
+chai.use(ChaiAsPromised);
 
 const expectedCreationDescription = "Some Description";
 
