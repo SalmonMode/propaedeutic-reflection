@@ -12,6 +12,9 @@ import { isString } from "./String";
 export function assertIsCreateNewSkillArea(
   value: object
 ): asserts value is CreateNewSkillArea {
+  if (!hasProperty(value, "title") || !isString(value.title)) {
+    throw new TypeError("Value is not CreateNewSkillArea");
+  }
   if (!hasProperty(value, "description") || !isString(value.description)) {
     throw new TypeError("Value is not CreateNewSkillArea");
   }
@@ -27,6 +30,9 @@ export function assertIsCreateNewSkillArea(
 export function assertIsSkillAreaSummary(
   value: object
 ): asserts value is SkillAreaSummary {
+  if (!hasProperty(value, "title") || !isString(value.title)) {
+    throw new TypeError("Value is not SkillAreaSummary");
+  }
   if (!hasProperty(value, "description") || !isString(value.description)) {
     throw new TypeError("Value is not SkillAreaSummary");
   }

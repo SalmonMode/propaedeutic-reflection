@@ -28,6 +28,7 @@ export async function getSkillArea(
   }
   return {
     id: found.id,
+    title: found.title,
     description: found.description,
   };
 }

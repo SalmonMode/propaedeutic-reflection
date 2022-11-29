@@ -14,6 +14,7 @@ export async function getAllSkillAreas(
   const found = await prisma.skillArea.findMany();
   return found.map((sa) => ({
     id: sa.id,
+    title: sa.title,
     description: sa.description,
   }));
 }

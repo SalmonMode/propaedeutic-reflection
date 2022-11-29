@@ -20,14 +20,17 @@ export async function handleCreateSkillArea(
 ): Promise<void> {
   assertIsCreateNewSkillArea(request.body);
   const {
-    body: { description },
+    body: { title, description },
   } = request;
+  if (title.length === 0) {
+    throw new TypeError(`Unrecognized skill area title format: ${title}`);
+  }
   if (description.length === 0) {
     throw new TypeError(
       `Unrecognized skill area description format: ${description}`
     );
   }
   const prisma = getPrismaClient();
-  const summary = await createSkillArea(prisma, description);
+  const summary = await createSkillArea(prisma, title, description);
   response.json(summary);
 }

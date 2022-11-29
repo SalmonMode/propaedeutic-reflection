@@ -11,15 +11,18 @@ import { SkillAreaSummary } from "../../types";
  */
 export async function createSkillArea(
   prisma: PrismaClient,
+  title: string,
   description: string
 ): Promise<SkillAreaSummary> {
   const created = await prisma.skillArea.create({
     data: {
+      title,
       description,
     },
   });
   return {
     id: created.id,
+    title: created.title,
     description: created.description,
   };
 }

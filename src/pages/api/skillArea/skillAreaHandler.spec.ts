@@ -16,6 +16,7 @@ var expect = chai.expect;
 
 chai.use(ChaiAsPromised);
 
+const expectedCreationTitle = "Some Title";
 const expectedCreationDescription = "Some Description";
 
 function mockRequestResponse(method: HttpMethod = HttpMethod.GET) {
@@ -47,22 +48,26 @@ describe("/api/skillArea", function () {
       let resJsonStub: Sinon.SinonStub;
       const skillArea1: SkillArea = {
         createdAt: new Date(),
+        title: expectedCreationTitle,
         description: expectedCreationDescription,
         id: 123,
         updatedAt: new Date(),
       };
       const skillArea2: SkillArea = {
         createdAt: new Date(),
+        title: expectedCreationTitle,
         description: expectedCreationDescription,
         id: 456,
         updatedAt: new Date(),
       };
       const expectedSkillAreaSummaries: SkillAreaSummary[] = [
         {
+          title: skillArea1.title,
           description: skillArea1.description,
           id: skillArea1.id,
         },
         {
+          title: skillArea2.title,
           description: skillArea2.description,
           id: skillArea2.id,
         },
@@ -263,11 +268,13 @@ describe("/api/skillArea", function () {
       let resJsonStub: Sinon.SinonStub;
       const skillArea: SkillArea = {
         createdAt: new Date(),
+        title: expectedCreationTitle,
         description: expectedCreationDescription,
         id: 123,
         updatedAt: new Date(),
       };
       const expectedSkillAreaSummary: SkillAreaSummary = {
+        title: skillArea.title,
         description: skillArea.description,
         id: skillArea.id,
       };
@@ -289,7 +296,10 @@ describe("/api/skillArea", function () {
         req.headers = {
           "Content-Type": "application/json",
         };
-        req.body = { description: expectedCreationDescription };
+        req.body = {
+          title: skillArea.title,
+          description: skillArea.description,
+        };
         res = mockedReq.res;
         resJsonStub = sandbox.stub(res, "json");
         await skillAreaHandler(req, res);
@@ -315,8 +325,11 @@ describe("/api/skillArea", function () {
       it("should have passed prisma to createSkillArea", async function () {
         expect(createSpy.getCalls()[0].args[0]).to.equal(client);
       });
+      it("should have passed title to createSkillArea", async function () {
+        expect(createSpy.getCalls()[0].args[1]).to.equal(expectedCreationTitle);
+      });
       it("should have passed description to createSkillArea", async function () {
-        expect(createSpy.getCalls()[0].args[1]).to.equal(
+        expect(createSpy.getCalls()[0].args[2]).to.equal(
           expectedCreationDescription
         );
       });
@@ -339,6 +352,7 @@ describe("/api/skillArea", function () {
       let resStatusStub: Sinon.SinonStub;
       const skillArea: SkillArea = {
         createdAt: new Date(),
+        title: expectedCreationTitle,
         description: "",
         id: 123,
         updatedAt: new Date(),
@@ -361,7 +375,10 @@ describe("/api/skillArea", function () {
         req.headers = {
           "Content-Type": "application/json",
         };
-        req.body = { description: "" };
+        req.body = {
+          title: skillArea.title,
+          description: skillArea.description,
+        };
         res = mockedReq.res;
         resJsonStub = sandbox.stub(res, "json");
         resStatusStub = sandbox.stub(res, "status");
@@ -390,9 +407,10 @@ describe("/api/skillArea", function () {
       let res: NextApiResponse;
       let resJsonStub: Sinon.SinonStub;
       let resStatusStub: Sinon.SinonStub;
-      const skillArea: SkillArea = {
+      const skillArea = {
         createdAt: new Date(),
-        description: "",
+        title: expectedCreationTitle,
+        description: 123,
         id: 123,
         updatedAt: new Date(),
       };
@@ -414,7 +432,124 @@ describe("/api/skillArea", function () {
         req.headers = {
           "Content-Type": "application/json",
         };
-        req.body = { description: 23475 };
+        req.body = {
+          title: skillArea.title,
+          description: skillArea.description,
+        };
+        res = mockedReq.res;
+        resJsonStub = sandbox.stub(res, "json");
+        resStatusStub = sandbox.stub(res, "status");
+        await skillAreaHandler(req, res);
+      });
+      after(async function () {
+        sandbox.restore();
+      });
+      it("have set response JSON to error", async function () {
+        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+          error: `Value is not CreateNewSkillArea`,
+        });
+      });
+      it("have set response Status Code to 400", async function () {
+        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+      });
+    });
+    describe("Invalid (Empty Title)", function () {
+      let sandbox: Sinon.SinonSandbox;
+      let client: PrismaClientSkillAreaCreate;
+      let createStub: Sinon.SinonStub;
+      let getPrismaStub: Sinon.SinonStub;
+      let handlerSpy: Sinon.SinonSpy;
+      let createSpy: Sinon.SinonSpy;
+      let req: NextApiRequest;
+      let res: NextApiResponse;
+      let resJsonStub: Sinon.SinonStub;
+      let resStatusStub: Sinon.SinonStub;
+      const skillArea: SkillArea = {
+        createdAt: new Date(),
+        title: "",
+        description: expectedCreationDescription,
+        id: 123,
+        updatedAt: new Date(),
+      };
+      before(async function () {
+        sandbox = Sinon.createSandbox();
+        createStub = sandbox.stub().returns(skillArea);
+        client = {
+          skillArea: {
+            create: createStub,
+          },
+        };
+
+        getPrismaStub = sandbox.stub(contextMod, "getPrismaClient");
+        getPrismaStub.returns(client);
+        handlerSpy = sandbox.spy(handleCreateMod, "handleCreateSkillArea");
+        createSpy = sandbox.spy(createSkillMod, "createSkillArea");
+        const mockedReq = mockRequestResponse(HttpMethod.POST);
+        req = mockedReq.req;
+        req.headers = {
+          "Content-Type": "application/json",
+        };
+        req.body = {
+          title: skillArea.title,
+          description: skillArea.description,
+        };
+        res = mockedReq.res;
+        resJsonStub = sandbox.stub(res, "json");
+        resStatusStub = sandbox.stub(res, "status");
+        await skillAreaHandler(req, res);
+      });
+      after(async function () {
+        sandbox.restore();
+      });
+      it("have set response JSON to error", async function () {
+        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+          error: `Unrecognized skill area title format: `,
+        });
+      });
+      it("have set response Status Code to 400", async function () {
+        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+      });
+    });
+    describe("Invalid (Title Wrong Type)", function () {
+      let sandbox: Sinon.SinonSandbox;
+      let client: PrismaClientSkillAreaCreate;
+      let createStub: Sinon.SinonStub;
+      let getPrismaStub: Sinon.SinonStub;
+      let handlerSpy: Sinon.SinonSpy;
+      let createSpy: Sinon.SinonSpy;
+      let req: NextApiRequest;
+      let res: NextApiResponse;
+      let resJsonStub: Sinon.SinonStub;
+      let resStatusStub: Sinon.SinonStub;
+      const skillArea = {
+        createdAt: new Date(),
+        title: 1223,
+        description: expectedCreationDescription,
+        id: 123,
+        updatedAt: new Date(),
+      };
+      before(async function () {
+        sandbox = Sinon.createSandbox();
+        createStub = sandbox.stub().returns(skillArea);
+        client = {
+          skillArea: {
+            create: createStub,
+          },
+        };
+
+        getPrismaStub = sandbox.stub(contextMod, "getPrismaClient");
+        getPrismaStub.returns(client);
+        handlerSpy = sandbox.spy(handleCreateMod, "handleCreateSkillArea");
+        createSpy = sandbox.spy(createSkillMod, "createSkillArea");
+        const mockedReq = mockRequestResponse(HttpMethod.POST);
+        req = mockedReq.req;
+        req.headers = {
+          "Content-Type": "application/json",
+        };
+        req.body = {
+          title: skillArea.title,
+          description: skillArea.description,
+        };
         res = mockedReq.res;
         resJsonStub = sandbox.stub(res, "json");
         resStatusStub = sandbox.stub(res, "status");

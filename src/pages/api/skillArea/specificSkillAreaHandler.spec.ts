@@ -48,11 +48,13 @@ describe("/api/skillArea/[id]", function () {
       let resJsonStub: Sinon.SinonStub;
       const skillArea: SkillArea = {
         createdAt: new Date(),
+        title: "Title",
         description: "Some",
         id: expectedSkillAreaId,
         updatedAt: new Date(),
       };
       const expectedCreatedSkillAreaSummary: SkillAreaSummary = {
+        title: skillArea.title,
         description: skillArea.description,
         id: skillArea.id,
       };

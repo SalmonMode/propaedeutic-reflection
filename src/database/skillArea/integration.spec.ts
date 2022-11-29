@@ -12,7 +12,10 @@ var expect = chai.expect;
 
 chai.use(ChaiAsPromised);
 
+const expectedCreationTitle = "Some Title";
+const expectedCreationTitle2 = "Some Title2";
 const expectedCreationDescription = "Some Description";
+const expectedCreationDescription2 = "Some Description2";
 
 describe("Integration: SkillArea", function () {
   describe("DB:", function () {
@@ -22,7 +25,11 @@ describe("Integration: SkillArea", function () {
         let summary: SkillAreaSummary;
         before(async function () {
           prisma = getPrismaClient();
-          summary = await createSkillArea(prisma, expectedCreationDescription);
+          summary = await createSkillArea(
+            prisma,
+            expectedCreationTitle,
+            expectedCreationDescription
+          );
         });
         after(async function () {
           if (prisma && summary && summary.id) {
@@ -45,6 +52,7 @@ describe("Integration: SkillArea", function () {
           prisma = getPrismaClient();
           createdSkillArea = await prisma.skillArea.create({
             data: {
+              title: expectedCreationTitle,
               description: expectedCreationDescription,
             },
           });
@@ -61,34 +69,59 @@ describe("Integration: SkillArea", function () {
         });
         it("should have produced SkillAreaSummary", async function () {
           expect(assertIsSkillAreaSummary(summary)).to.be.undefined;
+          expect(summary.title).to.equal(expectedCreationTitle);
+          expect(summary.description).to.equal(expectedCreationDescription);
         });
       });
       describe("Get All", function () {
         let prisma: PrismaClient;
-        let createdSkillArea: SkillArea;
+        let createdSkillArea1: SkillArea;
+        let createdSkillArea2: SkillArea;
         let summaries: SkillAreaSummary[];
         before(async function () {
           prisma = getPrismaClient();
-          createdSkillArea = await prisma.skillArea.create({
+          createdSkillArea1 = await prisma.skillArea.create({
             data: {
+              title: expectedCreationTitle,
               description: expectedCreationDescription,
+            },
+          });
+          createdSkillArea2 = await prisma.skillArea.create({
+            data: {
+              title: expectedCreationTitle2,
+              description: expectedCreationDescription2,
             },
           });
           summaries = await getAllSkillAreas(prisma);
         });
         after(async function () {
-          if (prisma && createdSkillArea && createdSkillArea.id) {
+          if (prisma && createdSkillArea1 && createdSkillArea1.id) {
             await prisma.skillArea.delete({
               where: {
-                id: createdSkillArea.id,
+                id: createdSkillArea1.id,
+              },
+            });
+          }
+          if (prisma && createdSkillArea2 && createdSkillArea2.id) {
+            await prisma.skillArea.delete({
+              where: {
+                id: createdSkillArea2.id,
               },
             });
           }
         });
         it("should have produced SkillAreaSummary", async function () {
-          for (let summary of summaries) {
-            expect(assertIsSkillAreaSummary(summary)).to.be.undefined;
-          }
+          expect(summaries.length).to.equal(2);
+          expect(assertIsSkillAreaSummary(summaries[0])).to.be.undefined;
+          expect(summaries[0].title).to.equal(expectedCreationTitle);
+          expect(summaries[0].description).to.equal(
+            expectedCreationDescription
+          );
+          expect(assertIsSkillAreaSummary(summaries[1])).to.be.undefined;
+          expect(summaries[1].title).to.equal(expectedCreationTitle2);
+          expect(summaries[1].description).to.equal(
+            expectedCreationDescription2
+          );
         });
       });
     });
