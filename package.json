@@ -10,7 +10,7 @@
     "test": "nyc mocha --recursive ./src/",
     "test:unit": "nyc mocha --recursive ./src/ -g 'Integration' -i",
     "test:integration": "nyc mocha --recursive ./src/ -g 'Integration'",
-    "test:ci": "nyc mocha --recursive ./dist/ --reporter mocha-junit-reporter"
+    "test:ci": "nyc mocha --recursive ./src/ --reporter mocha-junit-reporter"
   },
   "nyc": {
     "extension": [
