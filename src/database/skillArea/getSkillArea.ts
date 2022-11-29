@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { SkillAreaNotFoundError } from "../../../Errors";
-import { SkillAreaSummary } from "../../../types";
+import { SkillAreaNotFoundError } from "../../Errors";
+import { SkillAreaSummary } from "../../types";
 
 /**
  * Get a specific SkillArea.
@@ -16,7 +16,7 @@ export async function getSkillArea(
   prisma: PrismaClient,
   skillAreaId: number
 ): Promise<SkillAreaSummary> {
-  const found = await prisma.skillArea.findUnique({
+  const found = await prisma.skillArea.findUniqueOrThrow({
     where: {
       id: skillAreaId,
     },

@@ -6,9 +6,9 @@ import { createMocks } from "node-mocks-http";
 import * as Sinon from "sinon";
 import * as contextMod from "../../../getPrismaClient";
 import { HttpMethod, SkillAreaSummary } from "../../../types";
-import * as getSkillMod from "./getAllSkillAreas";
+import * as getSkillMod from "../../../database/skillArea/getAllSkillAreas";
 import * as handleGetMod from "./handleGetAllSkillAreas";
-import * as createSkillMod from "./createSkillArea";
+import * as createSkillMod from "../../../database/skillArea/createSkillArea";
 import * as handleCreateMod from "./handleCreateSkillArea";
 import { skillAreaHandler } from "./skillAreaHandler";
 

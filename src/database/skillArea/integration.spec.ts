@@ -1,9 +1,9 @@
 import { PrismaClient, SkillArea } from "@prisma/client";
 import * as chai from "chai";
 import ChaiAsPromised from "chai-as-promised";
-import { getPrismaClient } from "../../../getPrismaClient";
-import { assertIsSkillAreaSummary } from "../../../typePredicates";
-import { SkillAreaSummary } from "../../../types";
+import { getPrismaClient } from "../../getPrismaClient";
+import { assertIsSkillAreaSummary } from "../../typePredicates";
+import { SkillAreaSummary } from "../../types";
 import { createSkillArea } from "./createSkillArea";
 import { getAllSkillAreas } from "./getAllSkillAreas";
 import { getSkillArea } from "./getSkillArea";

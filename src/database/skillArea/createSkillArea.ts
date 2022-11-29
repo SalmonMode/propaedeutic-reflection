@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { SkillAreaSummary } from "../../../types";
+import { SkillAreaSummary } from "../../types";
 
 /**
  * Create a SkillArea using the description provided.

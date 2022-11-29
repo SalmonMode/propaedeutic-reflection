@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { SkillAreaSummary } from "../../../types";
+import { SkillAreaSummary } from "../../types";
 
 /**
  * Get a list of summaries for all SkillAreas in the DB.

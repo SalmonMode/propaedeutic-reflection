@@ -6,7 +6,7 @@ import { createMocks } from "node-mocks-http";
 import * as Sinon from "sinon";
 import * as contextMod from "../../../getPrismaClient";
 import { HttpMethod, SkillAreaSummary } from "../../../types";
-import * as getSkillMod from "./getSkillArea";
+import * as getSkillMod from "../../../database/skillArea/getSkillArea";
 import * as handleGetMod from "./handleGetSkillArea";
 import { specificSkillAreaHandler } from "./specificSkillAreaHandler";
 
@@ -28,7 +28,7 @@ function mockRequestResponse(method: HttpMethod = HttpMethod.GET) {
 
 type SkillAreaFindUnique = Pick<
   Prisma.SkillAreaDelegate<undefined>,
-  "findUnique"
+  "findUniqueOrThrow"
 >;
 interface PrismaClientSkillAreaFindUnique {
   skillArea: SkillAreaFindUnique;
@@ -61,7 +61,7 @@ describe("/api/skillArea/[id]", function () {
         findUniqueStub = sandbox.stub().returns(skillArea);
         client = {
           skillArea: {
-            findUnique: findUniqueStub,
+            findUniqueOrThrow: findUniqueStub,
           },
         };
 
@@ -121,7 +121,7 @@ describe("/api/skillArea/[id]", function () {
         findUniqueStub = sandbox.stub().returns(null);
         client = {
           skillArea: {
-            findUnique: findUniqueStub,
+            findUniqueOrThrow: findUniqueStub,
           },
         };
 

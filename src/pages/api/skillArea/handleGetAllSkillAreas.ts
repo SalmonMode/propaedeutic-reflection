@@ -1,7 +1,7 @@
 import { NextApiResponse } from "next";
+import { getAllSkillAreas } from "../../../database";
 import { getPrismaClient } from "../../../getPrismaClient";
 import { SkillAreaSummary } from "../../../types";
-import { getAllSkillAreas } from "./getAllSkillAreas";
 
 /**
  * Handle a request for getting all available SkillAreas.
