@@ -1,5 +1,4 @@
 import * as chai from "chai";
-import { hasProperty } from "./Property";
 import {
   assertIsCreateNewSkillArea,
   assertIsSkillAreaSummary,

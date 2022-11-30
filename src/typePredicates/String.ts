@@ -1,8 +1,8 @@
 /**
  * Type assertion function to check if a value is a string or not.
- * 
+ *
  * @throws {TypeError} if value is not a string
- * 
+ *
  * @param value an unknown value
  */
 export function assertIsString(value: unknown): asserts value is string {
@@ -12,7 +12,7 @@ export function assertIsString(value: unknown): asserts value is string {
 }
 /**
  * Type predicate to check if a value is a string or not.
- * 
+ *
  * @param value an unknown value
  * @returns true, if value is a string, false, if it is not
  */

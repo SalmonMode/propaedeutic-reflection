@@ -1,8 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { createSkillArea } from "../../../database";
 import { getPrismaClient } from "../../../getPrismaClient";
 import { assertIsCreateNewSkillArea } from "../../../typePredicates";
 import { SkillAreaSummary } from "../../../types";
-import { createSkillArea } from "../../../database";
 
 /**
  * Handle a request to create a new SkillArea.

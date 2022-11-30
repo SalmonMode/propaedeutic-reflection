@@ -1,4 +1,4 @@
-import { Score, SelfAssessment, SkillArea, User } from "@prisma/client";
+import { Score, SkillArea, User } from "@prisma/client";
 
 export type ScoreNums = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 export type AverageScore = number;
@@ -18,6 +18,7 @@ export const ScoreNumArray = [
   Score.SEVEN,
   Score.EIGHT,
   Score.NINE,
+  Score.TEN,
 ];
 
 export const ScoreNumMap: ScoreMap = {
@@ -36,8 +37,15 @@ export const ScoreNumMap: ScoreMap = {
 
 export interface SubmitSelfAssessment {
   userId: User["id"];
+  score: ScoreNums;
+}
+export interface SubmitSelfAssessmentSummary {
+  userId: User["id"];
   skillAreaId: SkillArea["id"];
   score: ScoreNums;
+}
+export interface GetSelfAssessment {
+  userId: User["id"];
 }
 export interface SelfAssessmentSummary {
   userId: User["id"];

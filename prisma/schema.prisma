@@ -47,9 +47,9 @@ model SelfAssessment {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   score       Score
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      Int
-  skillArea   SkillArea @relation(fields: [skillAreaId], references: [id])
+  skillArea   SkillArea @relation(fields: [skillAreaId], references: [id], onDelete: Cascade)
   skillAreaId Int
 
   @@id([userId, skillAreaId])

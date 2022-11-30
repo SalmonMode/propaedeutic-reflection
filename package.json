@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "npx tsc",
+    "migrate:deploy": "npx prisma migrate deploy",
     "test": "nyc mocha --recursive ./src/",
     "test:unit": "nyc mocha --recursive ./src/ -g 'Integration' -i",
     "test:integration": "nyc mocha --recursive ./src/ -g 'Integration'",

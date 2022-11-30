@@ -1,11 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { SkillAreaNotFoundError } from "../../Errors";
 import { SkillAreaSummary } from "../../types";
 
 /**
  * Get a specific SkillArea.
  *
- * @throws {@link SkillAreaNotFoundError} Thrown when no SkillArea could be found with the given ID.
+ * @throws {@link PrismaClientKnownRequestError} Thrown with code P2025 when no SkillArea was found with the given ID.
  *
  * @param prisma The client to access the DB with
  * @param skillAreaId The ID of the specific SkillArea to get
@@ -21,11 +20,6 @@ export async function getSkillArea(
       id: skillAreaId,
     },
   });
-  if (found === null) {
-    throw new SkillAreaNotFoundError(
-      `Unable to find skill area with id: ${skillAreaId}`
-    );
-  }
   return {
     id: found.id,
     title: found.title,

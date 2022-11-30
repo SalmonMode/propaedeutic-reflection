@@ -4,12 +4,12 @@ import ChaiAsPromised from "chai-as-promised";
 import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import * as Sinon from "sinon";
+import * as createSkillMod from "../../../database/skillArea/createSkillArea";
+import * as getSkillMod from "../../../database/skillArea/getAllSkillAreas";
 import * as contextMod from "../../../getPrismaClient";
 import { HttpMethod, SkillAreaSummary } from "../../../types";
-import * as getSkillMod from "../../../database/skillArea/getAllSkillAreas";
-import * as handleGetMod from "./handleGetAllSkillAreas";
-import * as createSkillMod from "../../../database/skillArea/createSkillArea";
 import * as handleCreateMod from "./handleCreateSkillArea";
+import * as handleGetMod from "./handleGetAllSkillAreas";
 import { skillAreaHandler } from "./skillAreaHandler";
 
 var expect = chai.expect;

@@ -17,8 +17,8 @@ const expectedCreationTitle2 = "Some Title2";
 const expectedCreationDescription = "Some Description";
 const expectedCreationDescription2 = "Some Description2";
 
-describe("Integration: SkillArea", function () {
-  describe("DB:", function () {
+describe("Integration", function () {
+  describe("DB", function () {
     describe("SkillArea", function () {
       describe("Create", function () {
         let prisma: PrismaClient;
@@ -110,7 +110,7 @@ describe("Integration: SkillArea", function () {
             });
           }
         });
-        it("should have produced SkillAreaSummary", async function () {
+        it("should have produced SkillAreaSummary array", async function () {
           expect(summaries.length).to.equal(2);
           expect(assertIsSkillAreaSummary(summaries[0])).to.be.undefined;
           expect(summaries[0].title).to.equal(expectedCreationTitle);

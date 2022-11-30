@@ -1,12 +1,13 @@
 import { Prisma, SkillArea } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import * as chai from "chai";
 import ChaiAsPromised from "chai-as-promised";
 import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import * as Sinon from "sinon";
+import * as getSkillMod from "../../../database/skillArea/getSkillArea";
 import * as contextMod from "../../../getPrismaClient";
 import { HttpMethod, SkillAreaSummary } from "../../../types";
-import * as getSkillMod from "../../../database/skillArea/getSkillArea";
 import * as handleGetMod from "./handleGetSkillArea";
 import { specificSkillAreaHandler } from "./specificSkillAreaHandler";
 
@@ -120,7 +121,12 @@ describe("/api/skillArea/[id]", function () {
       let resStatusStub: Sinon.SinonStub;
       before(async function () {
         sandbox = Sinon.createSandbox();
-        findUniqueStub = sandbox.stub().returns(null);
+        findUniqueStub = sandbox.stub().throws(
+          new PrismaClientKnownRequestError("Cannot find skill Area", {
+            code: "P2025",
+            clientVersion: "123",
+          })
+        );
         client = {
           skillArea: {
             findUniqueOrThrow: findUniqueStub,
@@ -164,7 +170,7 @@ describe("/api/skillArea/[id]", function () {
       });
       it("have set response JSON to error", async function () {
         expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
-          error: `Unable to find skill area with id: ${expectedSkillAreaId}`,
+          error: `Cannot find skill Area`,
         });
       });
       it("have set response Status Code to 404", async function () {
@@ -282,7 +288,7 @@ describe("/api/skillArea/[id]", function () {
       });
       it("have set response JSON to error", async function () {
         expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
-          error: "Unrecognized skill area id format: ",
+          error: "Unrecognized Skill Area ID format: ",
         });
       });
       it("have set response Status Code to 400", async function () {
@@ -314,7 +320,7 @@ describe("/api/skillArea/[id]", function () {
       });
       it("have set response JSON to error", async function () {
         expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
-          error: "Unrecognized skill area id format: Infinity",
+          error: "Unrecognized Skill Area ID format: Infinity",
         });
       });
       it("have set response Status Code to 400", async function () {

@@ -1,8 +1,6 @@
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { NextApiResponse } from "next";
-import {
-  InvalidHttpMethodError,
-  SkillAreaNotFoundError,
-} from "../../../Errors";
+import { InvalidHttpMethodError } from "../../../Errors";
 import { ErrorResponse } from "../../../types";
 
 /**
@@ -25,9 +23,13 @@ export function handleError(
   response: NextApiResponse<ErrorResponse>,
   error: unknown
 ): void {
-  if (error instanceof SkillAreaNotFoundError) {
-    response.status(404);
-    response.json({ error: error.message });
+  if (error instanceof PrismaClientKnownRequestError) {
+    if (error.code === "P2025") {
+      response.status(404);
+      response.json({ error: error.message });
+    } else {
+      throw error;
+    }
   } else if (error instanceof InvalidHttpMethodError) {
     response.setHeader("Allow", error.supportedMethods);
     response.status(405);
