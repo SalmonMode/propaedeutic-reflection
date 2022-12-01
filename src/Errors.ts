@@ -17,3 +17,14 @@ export class InvalidHttpMethodError<
     this.name = new.target.name;
   }
 }
+/**
+ * This is thrown when a resource requiring authorization is accessed without proper authentication.
+ */
+export class UnauthorizedError extends Error {
+  constructor(message?: string) {
+    super(message);
+
+    Object.setPrototypeOf(this, UnauthorizedError.prototype);
+    this.name = new.target.name;
+  }
+}

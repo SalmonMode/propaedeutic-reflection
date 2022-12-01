@@ -141,7 +141,6 @@ describe("Integration", function () {
           expect(assertIsSelfAssessmentSummary(result)).to.be.undefined;
           expect(result.averageScore).to.equal(9);
           expect(result.score).to.equal(expectedScore);
-          expect(result.userId).to.equal(user1.id);
           expect(result.skillAreaId).to.equal(primeArea.id);
         });
       });

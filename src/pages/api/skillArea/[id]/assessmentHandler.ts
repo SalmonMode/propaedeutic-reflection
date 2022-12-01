@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { InvalidHttpMethodError } from "../../../../Errors";
 import { HttpMethod } from "../../../../types";
-import { handleError } from "../handleError";
+import { handleError } from "../../handleError";
 import { handleGetAssessment } from "./handleGetAssessment";
 import { handleSubmitAssessment } from "./handleSubmitAssessment";
 

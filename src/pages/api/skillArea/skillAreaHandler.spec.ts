@@ -10,6 +10,7 @@ import * as contextMod from "../../../getPrismaClient";
 import { HttpMethod, SkillAreaSummary } from "../../../types";
 import * as handleCreateMod from "./handleCreateSkillArea";
 import * as handleGetMod from "./handleGetAllSkillAreas";
+import * as sessionMod from "next-auth/next";
 import { skillAreaHandler } from "./skillAreaHandler";
 
 var expect = chai.expect;
@@ -280,6 +281,9 @@ describe("/api/skillArea", function () {
       };
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ user: { id: 123 }, expires: "123" });
         createStub = sandbox.stub().returns(skillArea);
         client = {
           skillArea: {
@@ -359,6 +363,9 @@ describe("/api/skillArea", function () {
       };
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ user: { id: 123 }, expires: "123" });
         createStub = sandbox.stub().returns(skillArea);
         client = {
           skillArea: {
@@ -416,6 +423,9 @@ describe("/api/skillArea", function () {
       };
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ user: { id: 123 }, expires: "123" });
         createStub = sandbox.stub().returns(skillArea);
         client = {
           skillArea: {
@@ -473,6 +483,9 @@ describe("/api/skillArea", function () {
       };
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ user: { id: 123 }, expires: "123" });
         createStub = sandbox.stub().returns(skillArea);
         client = {
           skillArea: {
@@ -530,6 +543,9 @@ describe("/api/skillArea", function () {
       };
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ user: { id: 123 }, expires: "123" });
         createStub = sandbox.stub().returns(skillArea);
         client = {
           skillArea: {

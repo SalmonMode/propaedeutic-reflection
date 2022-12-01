@@ -15,9 +15,6 @@ import { hasProperty } from "./Property";
 export function assertIsSubmitSelfAssessment(
   value: object
 ): asserts value is SubmitSelfAssessment {
-  if (!hasProperty(value, "userId") || !Number.isInteger(value.userId)) {
-    throw new TypeError("Value is not SubmitSelfAssessment");
-  }
   if (
     !hasProperty(value, "score") ||
     typeof value.score !== "number" ||
@@ -69,9 +66,6 @@ export function assertIsSubmitSelfAssessmentSummary(
 export function assertIsSelfAssessmentSummary(
   value: object
 ): asserts value is SelfAssessmentSummary {
-  if (!hasProperty(value, "userId") || !Number.isInteger(value.userId)) {
-    throw new TypeError("Value is not SelfAssessmentSummary");
-  }
   if (
     !hasProperty(value, "skillAreaId") ||
     !Number.isInteger(value.skillAreaId)

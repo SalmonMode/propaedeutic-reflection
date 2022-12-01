@@ -1,7 +1,13 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { unstable_getServerSession } from "next-auth/next";
 import { getAssessment } from "../../../../database";
 import { getPrismaClient } from "../../../../getPrismaClient";
+import {
+  assertIsSession,
+  assertIsUserSession,
+} from "../../../../typePredicates";
 import { SelfAssessmentSummary } from "../../../../types";
+import { authOptions } from "../../auth/[...nextauth]";
 import { getSkillAreaIdFromRequest } from "../getSkillAreaIdFromRequest";
 
 /**
@@ -18,14 +24,14 @@ export async function handleGetAssessment(
   request: NextApiRequest,
   response: NextApiResponse<SelfAssessmentSummary>
 ): Promise<void> {
-  const userId = Number(request.query.userId);
-  if (
-    typeof request.query.userId !== "string" ||
-    request.query.userId.length === 0 ||
-    !Number.isInteger(userId)
-  ) {
-    throw new TypeError(`Unrecognized User ID format: ${request.query.userId}`);
-  }
+  const session = await unstable_getServerSession(
+    request,
+    response,
+    authOptions
+  );
+  assertIsSession(session);
+  assertIsUserSession(session);
+  const userId = session.user.id;
   const skillAreaId = getSkillAreaIdFromRequest(request);
   const prisma = getPrismaClient();
   const summary = await getAssessment(prisma, userId, skillAreaId);

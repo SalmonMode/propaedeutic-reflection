@@ -36,7 +36,6 @@ export const ScoreNumMap: ScoreMap = {
 };
 
 export interface SubmitSelfAssessment {
-  userId: User["id"];
   score: ScoreNums;
 }
 export interface SubmitSelfAssessmentSummary {
@@ -44,11 +43,7 @@ export interface SubmitSelfAssessmentSummary {
   skillAreaId: SkillArea["id"];
   score: ScoreNums;
 }
-export interface GetSelfAssessment {
-  userId: User["id"];
-}
 export interface SelfAssessmentSummary {
-  userId: User["id"];
   skillAreaId: SkillArea["id"];
   score: ScoreNums;
   averageScore: number;

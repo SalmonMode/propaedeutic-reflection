@@ -1,8 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { unstable_getServerSession } from "next-auth/next";
 import { submitAssessment } from "../../../../database";
 import { getPrismaClient } from "../../../../getPrismaClient";
-import { assertIsSubmitSelfAssessment } from "../../../../typePredicates";
+import {
+  assertIsSession,
+  assertIsSubmitSelfAssessment,
+  assertIsUserSession,
+} from "../../../../typePredicates";
 import { SuccessfulJsonResponse } from "../../../../types";
+import { authOptions } from "../../auth/[...nextauth]";
 import { getSkillAreaIdFromRequest } from "../getSkillAreaIdFromRequest";
 
 /**
@@ -19,9 +25,17 @@ export async function handleSubmitAssessment(
   request: NextApiRequest,
   response: NextApiResponse<typeof SuccessfulJsonResponse>
 ): Promise<void> {
+  const session = await unstable_getServerSession(
+    request,
+    response,
+    authOptions
+  );
+  assertIsSession(session);
+  assertIsUserSession(session);
   assertIsSubmitSelfAssessment(request.body);
+  const userId = session.user.id;
   const {
-    body: { userId, score },
+    body: { score },
   } = request;
   const skillAreaId = getSkillAreaIdFromRequest(request);
   const prisma = getPrismaClient();

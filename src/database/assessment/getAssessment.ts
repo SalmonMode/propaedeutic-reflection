@@ -73,7 +73,6 @@ export async function getAssessment(
     allAssessments.reduce((acc, curr) => acc + ScoreNumMap[curr.score], 0) /
     allAssessments.length;
   return {
-    userId: userId,
     skillAreaId: skillAreaId,
     score: ScoreNumMap[assessment.score],
     averageScore,

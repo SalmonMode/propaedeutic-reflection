@@ -3,6 +3,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import * as chai from "chai";
 import ChaiAsPromised from "chai-as-promised";
 import { NextApiRequest, NextApiResponse } from "next";
+import * as sessionMod from "next-auth/next";
 import { createMocks } from "node-mocks-http";
 import * as Sinon from "sinon";
 import * as getMod from "../../../../database/assessment/getAssessment";
@@ -98,10 +99,12 @@ describe("/api/skillArea/[id]/assessment", function () {
         averageScore: 9,
         score: 10,
         skillAreaId: expectedSkillAreaId,
-        userId: expectedUserId,
       };
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ user: { id: expectedUserId }, expires: "123" });
         findManyStub = sandbox
           .stub<
             ParamsOfFindMany<FindManyArgs>,
@@ -181,6 +184,9 @@ describe("/api/skillArea/[id]/assessment", function () {
       let resStatusStub: Sinon.SinonStub;
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ user: { id: expectedUserId }, expires: "123" });
         findManyStub = sandbox
           .stub<
             ParamsOfFindMany<FindManyArgs>,
@@ -312,7 +318,7 @@ describe("/api/skillArea/[id]/assessment", function () {
         expect(resStatusStub.getCalls()[0].args[0]).to.equal(405);
       });
     });
-    describe("Empty User ID (invalid ID length)", function () {
+    describe("No User Session", function () {
       let sandbox: Sinon.SinonSandbox;
       let client: PrismaClientSelfAssessmentFindUnique;
       let getPrismaStub: Sinon.SinonStub;
@@ -322,11 +328,11 @@ describe("/api/skillArea/[id]/assessment", function () {
       let resStatusStub: Sinon.SinonStub;
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox.stub(sessionMod, "unstable_getServerSession").resolves(null);
         getPrismaStub = sandbox.stub(contextMod, "getPrismaClient");
         getPrismaStub.returns(client);
         const mockedReq = mockRequestResponse();
         req = mockedReq.req;
-        req.query.userId = "";
         res = mockedReq.res;
         resJsonStub = sandbox.stub(res, "json");
         resStatusStub = sandbox.stub(res, "status");
@@ -337,14 +343,14 @@ describe("/api/skillArea/[id]/assessment", function () {
       });
       it("have set response JSON to error", async function () {
         expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
-          error: "Unrecognized User ID format: ",
+          error: "Unauthorized",
         });
       });
-      it("have set response Status Code to 400", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+      it("have set response Status Code to 403", async function () {
+        expect(resStatusStub.getCalls()[0].args[0]).to.equal(403);
       });
     });
-    describe("Invalid User ID Number (Infinity))", function () {
+    describe("Session Without User", function () {
       let sandbox: Sinon.SinonSandbox;
       let client: PrismaClientSelfAssessmentFindUnique;
       let getPrismaStub: Sinon.SinonStub;
@@ -354,11 +360,13 @@ describe("/api/skillArea/[id]/assessment", function () {
       let resStatusStub: Sinon.SinonStub;
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ expires: "123" });
         getPrismaStub = sandbox.stub(contextMod, "getPrismaClient");
         getPrismaStub.returns(client);
         const mockedReq = mockRequestResponse();
         req = mockedReq.req;
-        req.query.userId = "Infinity";
         res = mockedReq.res;
         resJsonStub = sandbox.stub(res, "json");
         resStatusStub = sandbox.stub(res, "status");
@@ -369,11 +377,11 @@ describe("/api/skillArea/[id]/assessment", function () {
       });
       it("have set response JSON to error", async function () {
         expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
-          error: "Unrecognized User ID format: Infinity",
+          error: "Unauthorized",
         });
       });
-      it("have set response Status Code to 400", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+      it("have set response Status Code to 403", async function () {
+        expect(resStatusStub.getCalls()[0].args[0]).to.equal(403);
       });
     });
   });
@@ -390,6 +398,9 @@ describe("/api/skillArea/[id]/assessment", function () {
       let resJsonStub: Sinon.SinonStub;
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ user: { id: expectedUserId }, expires: "123" });
         createStub = sandbox
           .stub<ParamsOfCreate<SubmitArgs>, ReturnOfCreate<SubmitArgs>>()
           .resolves({
@@ -413,7 +424,6 @@ describe("/api/skillArea/[id]/assessment", function () {
           "Content-Type": "application/json",
         };
         req.body = {
-          userId: expectedUserId,
           score: 10,
         };
         res = mockedReq.res;
@@ -463,7 +473,7 @@ describe("/api/skillArea/[id]/assessment", function () {
         );
       });
     });
-    describe("Invalid (Missing User ID)", function () {
+    describe("No User Session", function () {
       let sandbox: Sinon.SinonSandbox;
       let client: PrismaClientSelfAssessmentCreate;
       let createStub: Sinon.SinonStubbedMember<any>;
@@ -476,7 +486,7 @@ describe("/api/skillArea/[id]/assessment", function () {
       let resStatusStub: Sinon.SinonStub;
       before(async function () {
         sandbox = Sinon.createSandbox();
-
+        sandbox.stub(sessionMod, "unstable_getServerSession").resolves(null);
         createStub = sandbox
           .stub<ParamsOfCreate<SubmitArgs>, ReturnOfCreate<SubmitArgs>>()
           .resolves({
@@ -512,14 +522,14 @@ describe("/api/skillArea/[id]/assessment", function () {
       });
       it("have set response JSON to error", async function () {
         expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
-          error: `Value is not SubmitSelfAssessment`,
+          error: `Unauthorized`,
         });
       });
-      it("have set response Status Code to 400", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+      it("have set response Status Code to 403", async function () {
+        expect(resStatusStub.getCalls()[0].args[0]).to.equal(403);
       });
     });
-    describe("Invalid (User ID Wrong Type)", function () {
+    describe("Session Without User", function () {
       let sandbox: Sinon.SinonSandbox;
       let client: PrismaClientSelfAssessmentCreate;
       let createStub: Sinon.SinonStubbedMember<any>;
@@ -532,6 +542,9 @@ describe("/api/skillArea/[id]/assessment", function () {
       let resStatusStub: Sinon.SinonStub;
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ expires: "123" });
         createStub = sandbox
           .stub<ParamsOfCreate<SubmitArgs>, ReturnOfCreate<SubmitArgs>>()
           .resolves({
@@ -555,7 +568,6 @@ describe("/api/skillArea/[id]/assessment", function () {
           "Content-Type": "application/json",
         };
         req.body = {
-          userId: true,
           score: 10,
         };
         res = mockedReq.res;
@@ -568,11 +580,11 @@ describe("/api/skillArea/[id]/assessment", function () {
       });
       it("have set response JSON to error", async function () {
         expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
-          error: `Value is not SubmitSelfAssessment`,
+          error: `Unauthorized`,
         });
       });
-      it("have set response Status Code to 400", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+      it("have set response Status Code to 403", async function () {
+        expect(resStatusStub.getCalls()[0].args[0]).to.equal(403);
       });
     });
     describe("Invalid (Missing Score)", function () {
@@ -588,6 +600,9 @@ describe("/api/skillArea/[id]/assessment", function () {
       let resStatusStub: Sinon.SinonStub;
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ user: { id: expectedUserId }, expires: "123" });
         createStub = sandbox
           .stub<ParamsOfCreate<SubmitArgs>, ReturnOfCreate<SubmitArgs>>()
           .resolves({
@@ -610,9 +625,7 @@ describe("/api/skillArea/[id]/assessment", function () {
         req.headers = {
           "Content-Type": "application/json",
         };
-        req.body = {
-          userId: expectedUserId,
-        };
+        req.body = {};
         res = mockedReq.res;
         resJsonStub = sandbox.stub(res, "json");
         resStatusStub = sandbox.stub(res, "status");
@@ -643,6 +656,9 @@ describe("/api/skillArea/[id]/assessment", function () {
       let resStatusStub: Sinon.SinonStub;
       before(async function () {
         sandbox = Sinon.createSandbox();
+        sandbox
+          .stub(sessionMod, "unstable_getServerSession")
+          .resolves({ user: { id: expectedUserId }, expires: "123" });
         createStub = sandbox
           .stub<ParamsOfCreate<SubmitArgs>, ReturnOfCreate<SubmitArgs>>()
           .resolves({
@@ -666,7 +682,6 @@ describe("/api/skillArea/[id]/assessment", function () {
           "Content-Type": "application/json",
         };
         req.body = {
-          userId: expectedUserId,
           score: "10",
         };
         res = mockedReq.res;

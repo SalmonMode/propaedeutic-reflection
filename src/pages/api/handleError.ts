@@ -1,7 +1,7 @@
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { NextApiResponse } from "next";
-import { InvalidHttpMethodError } from "../../../Errors";
-import { ErrorResponse } from "../../../types";
+import { InvalidHttpMethodError, UnauthorizedError } from "../../Errors";
+import { ErrorResponse } from "../../types";
 
 /**
  * Respond to the request with an {@link ErrorResponse}.
@@ -34,6 +34,9 @@ export function handleError(
     response.setHeader("Allow", error.supportedMethods);
     response.status(405);
     response.json({ error: `Method ${error.methodUsed} Not Allowed` });
+  } else if (error instanceof UnauthorizedError) {
+    response.status(403);
+    response.json({ error: error.message });
   } else if (error instanceof TypeError) {
     response.status(400);
     response.json({ error: error.message });

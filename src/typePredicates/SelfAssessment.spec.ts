@@ -13,24 +13,12 @@ describe("SkillArea Type Checking", function () {
       describe("Valid", function () {
         it("should not throw an error", function () {
           const value = {
-            userId: 123,
             score: 10,
           };
           expect(assertIsSubmitSelfAssessment(value)).to.be.undefined;
         });
       });
       describe("Invalid", function () {
-        describe("Invalid userId Type", function () {
-          it("should throw a TypeError", function () {
-            const value = {
-              userId: "123",
-              score: 10,
-            };
-            expect(() => assertIsSubmitSelfAssessment(value)).to.throw(
-              TypeError
-            );
-          });
-        });
         describe("Invalid Score Type", function () {
           it("should throw a TypeError", function () {
             const value = {
@@ -70,14 +58,6 @@ describe("SkillArea Type Checking", function () {
               userId: 123,
               score: 11,
             };
-            expect(() => assertIsSubmitSelfAssessment(value)).to.throw(
-              TypeError
-            );
-          });
-        });
-        describe("Missing userId", function () {
-          it("should throw a TypeError", function () {
-            const value = { score: 10 };
             expect(() => assertIsSubmitSelfAssessment(value)).to.throw(
               TypeError
             );
@@ -220,7 +200,6 @@ describe("SkillArea Type Checking", function () {
       describe("Valid", function () {
         it("should not throw an error", function () {
           const value = {
-            userId: 123,
             skillAreaId: 456,
             score: 10,
             averageScore: 5.5,
@@ -229,19 +208,6 @@ describe("SkillArea Type Checking", function () {
         });
       });
       describe("Invalid", function () {
-        describe("Invalid userId Type", function () {
-          it("should throw a TypeError", function () {
-            const value = {
-              userId: "123",
-              skillAreaId: 456,
-              score: 10,
-              averageScore: 5.5,
-            };
-            expect(() => assertIsSelfAssessmentSummary(value)).to.throw(
-              TypeError
-            );
-          });
-        });
         describe("Invalid skillAreaId Type", function () {
           it("should throw a TypeError", function () {
             const value = {
@@ -340,18 +306,6 @@ describe("SkillArea Type Checking", function () {
               skillAreaId: 456,
               score: 10,
               averageScore: 11,
-            };
-            expect(() => assertIsSelfAssessmentSummary(value)).to.throw(
-              TypeError
-            );
-          });
-        });
-        describe("Missing userId", function () {
-          it("should throw a TypeError", function () {
-            const value = {
-              skillAreaId: 456,
-              score: 10,
-              averageScore: 5.5,
             };
             expect(() => assertIsSelfAssessmentSummary(value)).to.throw(
               TypeError

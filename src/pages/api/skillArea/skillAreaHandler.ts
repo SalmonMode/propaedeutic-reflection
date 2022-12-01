@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { InvalidHttpMethodError } from "../../../Errors";
 import { HttpMethod } from "../../../types";
 import { handleCreateSkillArea } from "./handleCreateSkillArea";
-import { handleError } from "./handleError";
+import { handleError } from "../handleError";
 import { handleGetAllSkillAreas } from "./handleGetAllSkillAreas";
 
 /**

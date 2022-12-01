@@ -1,8 +1,14 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import { unstable_getServerSession } from "next-auth/next";
 import { createSkillArea } from "../../../database";
 import { getPrismaClient } from "../../../getPrismaClient";
-import { assertIsCreateNewSkillArea } from "../../../typePredicates";
+import {
+  assertIsCreateNewSkillArea,
+  assertIsSession,
+  assertIsUserSession,
+} from "../../../typePredicates";
 import { SkillAreaSummary } from "../../../types";
+import { authOptions } from "../auth/[...nextauth]";
 
 /**
  * Handle a request to create a new SkillArea.
@@ -18,6 +24,14 @@ export async function handleCreateSkillArea(
   request: NextApiRequest,
   response: NextApiResponse<SkillAreaSummary>
 ): Promise<void> {
+  const session = await unstable_getServerSession(
+    request,
+    response,
+    authOptions
+  );
+
+  assertIsSession(session);
+  assertIsUserSession(session);
   assertIsCreateNewSkillArea(request.body);
   const {
     body: { title, description },

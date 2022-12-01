@@ -3,7 +3,7 @@ import * as chai from "chai";
 import { NextApiRequest, NextApiResponse } from "next";
 import { createMocks } from "node-mocks-http";
 import { HttpMethod } from "../../../types";
-import { handleError } from "./handleError";
+import { handleError } from "../handleError";
 
 var expect = chai.expect;
 
