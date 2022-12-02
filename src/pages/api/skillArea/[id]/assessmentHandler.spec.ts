@@ -84,7 +84,7 @@ const expectedUserId = 456;
 
 describe("/api/skillArea/[id]/assessment", function () {
   describe("GET", function () {
-    describe("Valid", function () {
+    describe("Valid (Has Session With User)", function () {
       let sandbox: Sinon.SinonSandbox;
       let client: PrismaClientSelfAssessmentFindUnique;
       let findUniqueStub: Sinon.SinonStubbedMember<any>;
@@ -318,7 +318,7 @@ describe("/api/skillArea/[id]/assessment", function () {
         expect(resStatusStub.getCalls()[0].args[0]).to.equal(405);
       });
     });
-    describe("No User Session", function () {
+    describe("No Session", function () {
       let sandbox: Sinon.SinonSandbox;
       let client: PrismaClientSelfAssessmentFindUnique;
       let getPrismaStub: Sinon.SinonStub;
@@ -386,7 +386,7 @@ describe("/api/skillArea/[id]/assessment", function () {
     });
   });
   describe("POST", function () {
-    describe("Valid", function () {
+    describe("Valid (Has Session With User)", function () {
       let sandbox: Sinon.SinonSandbox;
       let client: PrismaClientSelfAssessmentCreate;
       let createStub: Sinon.SinonStub<any>;
@@ -473,7 +473,7 @@ describe("/api/skillArea/[id]/assessment", function () {
         );
       });
     });
-    describe("No User Session", function () {
+    describe("No Session", function () {
       let sandbox: Sinon.SinonSandbox;
       let client: PrismaClientSelfAssessmentCreate;
       let createStub: Sinon.SinonStubbedMember<any>;
