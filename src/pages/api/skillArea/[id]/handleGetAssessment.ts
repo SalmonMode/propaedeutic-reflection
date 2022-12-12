@@ -2,10 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { unstable_getServerSession } from "next-auth/next";
 import { getAssessment } from "../../../../database";
 import { getPrismaClient } from "../../../../getPrismaClient";
-import {
-  assertIsSession,
-  assertIsUserSession,
-} from "../../../../typePredicates";
+import { assertIsSession } from "../../../../typePredicates";
 import { SelfAssessmentSummary } from "../../../../types";
 import { authOptions } from "../../auth/[...nextauth]";
 import { getSkillAreaIdFromRequest } from "../getSkillAreaIdFromRequest";
@@ -30,7 +27,6 @@ export async function handleGetAssessment(
     authOptions
   );
   assertIsSession(session);
-  assertIsUserSession(session);
   const userId = session.user.id;
   const skillAreaId = getSkillAreaIdFromRequest(request);
   const prisma = getPrismaClient();

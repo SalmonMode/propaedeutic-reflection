@@ -1,7 +1,5 @@
 import * as chai from "chai";
-import { Session } from "next-auth";
 import { getSecret } from "./getSecret";
-import { session } from "./session";
 
 var expect = chai.expect;
 

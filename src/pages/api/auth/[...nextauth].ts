@@ -4,7 +4,7 @@ import GitHubProvider from "next-auth/providers/github";
 import { getPrismaClient } from "../../../getPrismaClient";
 import { getGitHubAppSecretInfo } from "./getGitHubAppSecretInfo";
 import { getSecret } from "./getSecret";
-import { session } from "./session";
+import { session } from "./sessionCallback";
 
 const prisma = getPrismaClient();
 

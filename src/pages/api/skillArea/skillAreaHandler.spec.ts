@@ -102,16 +102,19 @@ describe("/api/skillArea", function () {
         expect(handlerSpy.getCalls().length).to.equal(1);
       });
       it("should have passed response to handleGetAllSkillAreas", async function () {
-        expect(handlerSpy.getCalls()[0].args[0]).to.deep.equal(res);
+        const firstCall = handlerSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal(res);
       });
       it("should have called getAllSkillAreas once", async function () {
         expect(getSpy.getCalls().length).to.equal(1);
       });
       it("should have passed prisma to getAllSkillAreas", async function () {
-        expect(getSpy.getCalls()[0].args[0]).to.equal(client);
+        const firstCall = getSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(client);
       });
       it("have set response JSON to summary", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal(
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal(
           expectedSkillAreaSummaries
         );
       });
@@ -157,16 +160,19 @@ describe("/api/skillArea", function () {
         expect(handlerSpy.getCalls().length).to.equal(1);
       });
       it("should have passed response to handleGetAllSkillAreas", async function () {
-        expect(handlerSpy.getCalls()[0].args[0]).to.deep.equal(res);
+        const firstCall = handlerSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal(res);
       });
       it("should have called getAllSkillAreas once", async function () {
         expect(getSpy.getCalls().length).to.equal(1);
       });
       it("should have passed prisma to getAllSkillAreas", async function () {
-        expect(getSpy.getCalls()[0].args[0]).to.equal(client);
+        const firstCall = getSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(client);
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal([]);
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal([]);
       });
     });
     describe("Unhandled Error", function () {
@@ -215,12 +221,14 @@ describe("/api/skillArea", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: "Method undefined Not Allowed",
         });
       });
       it("have set response Status Code to 405", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(405);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(405);
       });
     });
     describe("WEIRD (invalid HTTP Method)", function () {
@@ -247,12 +255,14 @@ describe("/api/skillArea", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: "Method WEIRD Not Allowed",
         });
       });
       it("have set response Status Code to 405", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(405);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(405);
       });
     });
   });
@@ -318,27 +328,33 @@ describe("/api/skillArea", function () {
         expect(handlerSpy.getCalls().length).to.equal(1);
       });
       it("should have passed request to handleCreateSkillArea", async function () {
-        expect(handlerSpy.getCalls()[0].args[0]).to.deep.equal(req);
+        const firstCall = handlerSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal(req);
       });
       it("should have passed response to handleCreateSkillArea", async function () {
-        expect(handlerSpy.getCalls()[0].args[1]).to.deep.equal(res);
+        const firstCall = handlerSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[1]).to.deep.equal(res);
       });
       it("should have called createSkillArea once", async function () {
         expect(createSpy.getCalls().length).to.equal(1);
       });
       it("should have passed prisma to createSkillArea", async function () {
-        expect(createSpy.getCalls()[0].args[0]).to.equal(client);
+        const firstCall = createSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(client);
       });
       it("should have passed title to createSkillArea", async function () {
-        expect(createSpy.getCalls()[0].args[1]).to.equal(expectedCreationTitle);
+        const firstCall = createSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[1]).to.equal(expectedCreationTitle);
       });
       it("should have passed description to createSkillArea", async function () {
-        expect(createSpy.getCalls()[0].args[2]).to.equal(
+        const firstCall = createSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[2]).to.equal(
           expectedCreationDescription
         );
       });
       it("have set response JSON to summary", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal(
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal(
           expectedSkillAreaSummary
         );
       });
@@ -395,12 +411,14 @@ describe("/api/skillArea", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: `Unrecognized skill area description format: `,
         });
       });
       it("have set response Status Code to 400", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(400);
       });
     });
     describe("Invalid (Description Wrong Type)", function () {
@@ -455,12 +473,14 @@ describe("/api/skillArea", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: `Value is not CreateNewSkillArea`,
         });
       });
       it("have set response Status Code to 400", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(400);
       });
     });
     describe("Invalid (Empty Title)", function () {
@@ -515,12 +535,14 @@ describe("/api/skillArea", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: `Unrecognized skill area title format: `,
         });
       });
       it("have set response Status Code to 400", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(400);
       });
     });
     describe("Invalid (Title Wrong Type)", function () {
@@ -575,12 +597,14 @@ describe("/api/skillArea", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: `Value is not CreateNewSkillArea`,
         });
       });
       it("have set response Status Code to 400", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(400);
       });
     });
   });

@@ -5,7 +5,6 @@ import { getPrismaClient } from "../../../getPrismaClient";
 import {
   assertIsCreateNewSkillArea,
   assertIsSession,
-  assertIsUserSession,
 } from "../../../typePredicates";
 import { SkillAreaSummary } from "../../../types";
 import { authOptions } from "../auth/[...nextauth]";
@@ -31,7 +30,6 @@ export async function handleCreateSkillArea(
   );
 
   assertIsSession(session);
-  assertIsUserSession(session);
   assertIsCreateNewSkillArea(request.body);
   const {
     body: { title, description },

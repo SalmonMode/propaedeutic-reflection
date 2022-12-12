@@ -110,18 +110,21 @@ describe("Integration", function () {
             });
           }
         });
-        it("should have produced SkillAreaSummary array", async function () {
-          expect(summaries.length).to.equal(2);
-          expect(assertIsSkillAreaSummary(summaries[0])).to.be.undefined;
-          expect(summaries[0].title).to.equal(expectedCreationTitle);
-          expect(summaries[0].description).to.equal(
-            expectedCreationDescription
+        it("should have produced SkillAreaSummary array with skillArea1", async function () {
+          const sa1 = summaries.find(
+            (sa) =>
+              sa.title === expectedCreationTitle &&
+              sa.description === expectedCreationDescription
           );
-          expect(assertIsSkillAreaSummary(summaries[1])).to.be.undefined;
-          expect(summaries[1].title).to.equal(expectedCreationTitle2);
-          expect(summaries[1].description).to.equal(
-            expectedCreationDescription2
+          expect(sa1).to.not.be.undefined;
+        });
+        it("should have produced SkillAreaSummary array with skillArea2", async function () {
+          const sa2 = summaries.find(
+            (sa) =>
+              sa.title === expectedCreationTitle2 &&
+              sa.description === expectedCreationDescription2
           );
+          expect(sa2).to.not.be.undefined;
         });
       });
     });

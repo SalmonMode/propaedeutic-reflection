@@ -7,7 +7,7 @@ import {
 
 var expect = chai.expect;
 
-describe("SkillArea Type Checking", function () {
+describe("SelfAssessment Type Checking", function () {
   describe("SubmitSelfAssessment", function () {
     describe("Type Assertion Function", function () {
       describe("Valid", function () {

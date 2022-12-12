@@ -5,7 +5,6 @@ import { getPrismaClient } from "../../../../getPrismaClient";
 import {
   assertIsSession,
   assertIsSubmitSelfAssessment,
-  assertIsUserSession,
 } from "../../../../typePredicates";
 import { SuccessfulJsonResponse } from "../../../../types";
 import { authOptions } from "../../auth/[...nextauth]";
@@ -31,7 +30,6 @@ export async function handleSubmitAssessment(
     authOptions
   );
   assertIsSession(session);
-  assertIsUserSession(session);
   assertIsSubmitSelfAssessment(request.body);
   const userId = session.user.id;
   const {

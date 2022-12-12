@@ -147,25 +147,31 @@ describe("/api/skillArea/[id]/assessment", function () {
         expect(handlerSpy.getCalls().length).to.equal(1);
       });
       it("should have passed request to handleGetAssessment", async function () {
-        expect(handlerSpy.getCalls()[0].args[0]).to.deep.equal(req);
+        const firstCall = handlerSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal(req);
       });
       it("should have passed response to handleGetAssessment", async function () {
-        expect(handlerSpy.getCalls()[0].args[1]).to.deep.equal(res);
+        const firstCall = handlerSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[1]).to.deep.equal(res);
       });
       it("should have called getAssessment once", async function () {
         expect(getSpy.getCalls().length).to.equal(1);
       });
       it("should have passed prisma to getAssessment", async function () {
-        expect(getSpy.getCalls()[0].args[0]).to.equal(client);
+        const firstCall = getSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(client);
       });
       it("should have passed userId to getAssessment", async function () {
-        expect(getSpy.getCalls()[0].args[1]).to.equal(expectedUserId);
+        const firstCall = getSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[1]).to.equal(expectedUserId);
       });
       it("should have passed skillAreaId to getAssessment", async function () {
-        expect(getSpy.getCalls()[0].args[2]).to.equal(expectedSkillAreaId);
+        const firstCall = getSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[2]).to.equal(expectedSkillAreaId);
       });
       it("have set response JSON to summary", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal(
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal(
           expectedAssessmentSummary
         );
       });
@@ -228,30 +234,37 @@ describe("/api/skillArea/[id]/assessment", function () {
         expect(handlerSpy.getCalls().length).to.equal(1);
       });
       it("should have passed request to handleGetAssessment", async function () {
-        expect(handlerSpy.getCalls()[0].args[0]).to.deep.equal(req);
+        const firstCall = handlerSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal(req);
       });
       it("should have passed response to handleGetAssessment", async function () {
-        expect(handlerSpy.getCalls()[0].args[1]).to.deep.equal(res);
+        const firstCall = handlerSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[1]).to.deep.equal(res);
       });
       it("should have called getAssessment once", async function () {
         expect(getSpy.getCalls().length).to.equal(1);
       });
       it("should have passed prisma to getAssessment", async function () {
-        expect(getSpy.getCalls()[0].args[0]).to.equal(client);
+        const firstCall = getSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(client);
       });
       it("should have passed userId to getAssessment", async function () {
-        expect(getSpy.getCalls()[0].args[1]).to.equal(expectedUserId);
+        const firstCall = getSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[1]).to.equal(expectedUserId);
       });
       it("should have passed skillAreaId to getAssessment", async function () {
-        expect(getSpy.getCalls()[0].args[2]).to.equal(expectedSkillAreaId);
+        const firstCall = getSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[2]).to.equal(expectedSkillAreaId);
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: `Cannot find assessment`,
         });
       });
       it("have set response Status Code to 404", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(404);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(404);
       });
     });
     describe("Undefined Method (invalid HTTP Method)", function () {
@@ -278,12 +291,14 @@ describe("/api/skillArea/[id]/assessment", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: "Method undefined Not Allowed",
         });
       });
       it("have set response Status Code to 405", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(405);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(405);
       });
     });
     describe("WEIRD (invalid HTTP Method)", function () {
@@ -310,12 +325,14 @@ describe("/api/skillArea/[id]/assessment", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: "Method WEIRD Not Allowed",
         });
       });
       it("have set response Status Code to 405", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(405);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(405);
       });
     });
     describe("No Session", function () {
@@ -342,46 +359,14 @@ describe("/api/skillArea/[id]/assessment", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: "Unauthorized",
         });
       });
       it("have set response Status Code to 403", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(403);
-      });
-    });
-    describe("Session Without User", function () {
-      let sandbox: Sinon.SinonSandbox;
-      let client: PrismaClientSelfAssessmentFindUnique;
-      let getPrismaStub: Sinon.SinonStub;
-      let req: NextApiRequest;
-      let res: NextApiResponse;
-      let resJsonStub: Sinon.SinonStub;
-      let resStatusStub: Sinon.SinonStub;
-      before(async function () {
-        sandbox = Sinon.createSandbox();
-        sandbox
-          .stub(sessionMod, "unstable_getServerSession")
-          .resolves({ expires: "123" });
-        getPrismaStub = sandbox.stub(contextMod, "getPrismaClient");
-        getPrismaStub.returns(client);
-        const mockedReq = mockRequestResponse();
-        req = mockedReq.req;
-        res = mockedReq.res;
-        resJsonStub = sandbox.stub(res, "json");
-        resStatusStub = sandbox.stub(res, "status");
-        await assessmentHandler(req, res);
-      });
-      after(async function () {
-        sandbox.restore();
-      });
-      it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
-          error: "Unauthorized",
-        });
-      });
-      it("have set response Status Code to 403", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(403);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(403);
       });
     });
   });
@@ -440,35 +425,42 @@ describe("/api/skillArea/[id]/assessment", function () {
         expect(handlerSpy.getCalls().length).to.equal(1);
       });
       it("should have passed request to handleSubmitAssessment", async function () {
-        expect(handlerSpy.getCalls()[0].args[0]).to.deep.equal(req);
+        const firstCall = handlerSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal(req);
       });
       it("should have passed response to handleSubmitAssessment", async function () {
-        expect(handlerSpy.getCalls()[0].args[1]).to.deep.equal(res);
+        const firstCall = handlerSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[1]).to.deep.equal(res);
       });
       it("should have called submitAssessment once", async function () {
         expect(submitSpy.getCalls().length).to.equal(1);
       });
       it("should have passed prisma to submitAssessment", async function () {
-        expect(submitSpy.getCalls()[0].args[0]).to.equal(client);
+        const firstCall = submitSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(client);
       });
       it("should have passed userId to submitAssessment", async function () {
-        expect(submitSpy.getCalls()[0].args[1]).to.equal(expectedUserId);
+        const firstCall = submitSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[1]).to.equal(expectedUserId);
       });
       it("should have passed skillAreaId to submitAssessment", async function () {
-        expect(submitSpy.getCalls()[0].args[2]).to.equal(expectedSkillAreaId);
+        const firstCall = submitSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[2]).to.equal(expectedSkillAreaId);
       });
       it("should have passed score to submitAssessment", async function () {
-        expect(submitSpy.getCalls()[0].args[3]).to.equal(10);
+        const firstCall = submitSpy.getCalls()[0];
+        expect(firstCall && firstCall.args[3]).to.equal(10);
       });
       it("have set returned summary from submitAssessment", async function () {
+        const firstCall = submitSpy.getCalls()[0];
         expect(
-          assertIsSubmitSelfAssessmentSummary(
-            await submitSpy.getCalls()[0].returnValue
-          )
+          firstCall &&
+            assertIsSubmitSelfAssessmentSummary(await firstCall.returnValue)
         ).to.be.undefined;
       });
       it("have set response JSON to success", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal(
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal(
           SuccessfulJsonResponse
         );
       });
@@ -521,70 +513,14 @@ describe("/api/skillArea/[id]/assessment", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: `Unauthorized`,
         });
       });
       it("have set response Status Code to 403", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(403);
-      });
-    });
-    describe("Session Without User", function () {
-      let sandbox: Sinon.SinonSandbox;
-      let client: PrismaClientSelfAssessmentCreate;
-      let createStub: Sinon.SinonStubbedMember<any>;
-      let getPrismaStub: Sinon.SinonStub;
-      let handlerSpy: Sinon.SinonSpy;
-      let submitSpy: Sinon.SinonSpy;
-      let req: NextApiRequest;
-      let res: NextApiResponse;
-      let resJsonStub: Sinon.SinonStub;
-      let resStatusStub: Sinon.SinonStub;
-      before(async function () {
-        sandbox = Sinon.createSandbox();
-        sandbox
-          .stub(sessionMod, "unstable_getServerSession")
-          .resolves({ expires: "123" });
-        createStub = sandbox
-          .stub<ParamsOfCreate<SubmitArgs>, ReturnOfCreate<SubmitArgs>>()
-          .resolves({
-            userId: expectedUserId,
-            skillAreaId: expectedSkillAreaId,
-            score: Score.TEN,
-          });
-        client = {
-          selfAssessment: {
-            create: createStub,
-          },
-        };
-
-        getPrismaStub = sandbox.stub(contextMod, "getPrismaClient");
-        getPrismaStub.returns(client);
-        handlerSpy = sandbox.spy(handleSubmitMod, "handleSubmitAssessment");
-        submitSpy = sandbox.spy(submitMod, "submitAssessment");
-        const mockedReq = mockRequestResponse(HttpMethod.POST);
-        req = mockedReq.req;
-        req.headers = {
-          "Content-Type": "application/json",
-        };
-        req.body = {
-          score: 10,
-        };
-        res = mockedReq.res;
-        resJsonStub = sandbox.stub(res, "json");
-        resStatusStub = sandbox.stub(res, "status");
-        await assessmentHandler(req, res);
-      });
-      after(async function () {
-        sandbox.restore();
-      });
-      it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
-          error: `Unauthorized`,
-        });
-      });
-      it("have set response Status Code to 403", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(403);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(403);
       });
     });
     describe("Invalid (Missing Score)", function () {
@@ -635,12 +571,14 @@ describe("/api/skillArea/[id]/assessment", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: `Value is not SubmitSelfAssessment`,
         });
       });
       it("have set response Status Code to 400", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(400);
       });
     });
     describe("Invalid (Score Wrong Type)", function () {
@@ -693,12 +631,14 @@ describe("/api/skillArea/[id]/assessment", function () {
         sandbox.restore();
       });
       it("have set response JSON to error", async function () {
-        expect(resJsonStub.getCalls()[0].args[0]).to.deep.equal({
+        const firstCall = resJsonStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.deep.equal({
           error: `Value is not SubmitSelfAssessment`,
         });
       });
       it("have set response Status Code to 400", async function () {
-        expect(resStatusStub.getCalls()[0].args[0]).to.equal(400);
+        const firstCall = resStatusStub.getCalls()[0];
+        expect(firstCall && firstCall.args[0]).to.equal(400);
       });
     });
   });

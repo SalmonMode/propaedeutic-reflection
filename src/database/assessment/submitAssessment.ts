@@ -1,4 +1,5 @@
 import { PrismaClient, Score, SkillArea, User } from "@prisma/client";
+import { assertIsString } from "typed-http-client";
 import {
   ScoreNumArray,
   ScoreNumMap,
@@ -44,9 +45,11 @@ export async function submitAssessment(
   skillAreaId: number,
   score: ScoreNums
 ): Promise<SubmitSelfAssessmentSummary> {
+  const formattedScore = ScoreNumArray[score];
+  assertIsString(formattedScore);
   const args: SubmitArgs = {
     data: {
-      score: ScoreNumArray[score],
+      score: formattedScore,
       user: {
         connect: {
           id: userId,
