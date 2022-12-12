@@ -1,6 +1,7 @@
 recursive: true
 spec:
-  - "src/**/*.spec.ts"
+  - "src/**/*.spec.{js,jsx,ts,tsx}"
 require:
   - "ts-node/register"
   - "source-map-support/register"
+  - "global-jsdom/register"

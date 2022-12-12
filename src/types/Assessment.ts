@@ -48,3 +48,12 @@ export interface SelfAssessmentSummary {
   score: ScoreNums;
   averageScore: number;
 }
+export interface SelfAssessmentSummaryMap {
+  [key: SelfAssessmentSummary["skillAreaId"]]: SelfAssessmentSummary;
+}
+export interface SelfAssessmentLoadingMap {
+  [key: SelfAssessmentSummary["skillAreaId"]]: boolean;
+}
+export interface SelfAssessmentErrorMap {
+  [key: SelfAssessmentSummary["skillAreaId"]]: string;
+}
