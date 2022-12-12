@@ -1,6 +1,5 @@
+import { hasProperty, isString } from "typed-http-client";
 import { CreateNewSkillArea, SkillAreaSummary } from "../types";
-import { hasProperty } from "./Property";
-import { isString } from "./String";
 
 /**
  * Check if a given object matches the {@link CreateNewSkillArea} interface.

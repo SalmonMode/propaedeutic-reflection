@@ -28,3 +28,14 @@ export class UnauthorizedError extends Error {
     this.name = new.target.name;
   }
 }
+/**
+ * Thrown when a resource is not found (e.g. when trying to represent a 404 error).
+ */
+export class ResourceNotFoundError extends Error {
+  constructor(message?: string) {
+    super(message);
+
+    Object.setPrototypeOf(this, ResourceNotFoundError.prototype);
+    this.name = new.target.name;
+  }
+}

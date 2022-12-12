@@ -1,9 +1,9 @@
+import { hasProperty } from "typed-http-client";
 import {
   SelfAssessmentSummary,
   SubmitSelfAssessment,
   SubmitSelfAssessmentSummary,
 } from "../types";
-import { hasProperty } from "./Property";
 
 /**
  * Check if a given object matches the {@link SubmitSelfAssessment} interface.
