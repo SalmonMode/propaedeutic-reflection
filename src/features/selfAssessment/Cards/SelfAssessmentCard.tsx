@@ -50,7 +50,7 @@ export default function SelfAssessmentCard({
       className={`selfAssessmentCard ${variant} ${classes.root}`}
       data-testid={`skillArea-${skillAreaId}`}
     >
-      <CardContent>
+      <CardContent style={{ minWidth: "250px", maxWidth: "500px" }}>
         <SkillAreaCardHeaders
           title={skillAreaSummary.title}
           description={skillAreaSummary.description}

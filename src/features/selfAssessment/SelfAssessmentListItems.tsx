@@ -5,8 +5,22 @@ import SelfAssessmentCard from "./Cards/SelfAssessmentCard";
 const useStyles = makeStyles((theme) => ({
   list: {
     "& > *": {
-      margin: theme.spacing(1),
       display: "inline-block",
+      "min-width": "275px",
+      "max-width": "500px",
+      margin: "10px",
+    },
+    "& > * > *": {
+      display: "inline-block",
+      "min-width": "275px",
+      "max-width": "500px",
+    },
+    "&": {
+      display: "flex",
+      flexWrap: "wrap",
+      flexDirection: "row",
+      alignItems: "stretch",
+      justifyContent: "center",
     },
   },
 }));
@@ -19,7 +33,7 @@ export default function SelfAssessmentListItems() {
     content = <Typography>No Skill Areas have been submitted yet</Typography>;
   } else {
     content = (
-      <div>
+      <div className={classes.list}>
         {Object.keys(skillAreas.skillAreas).map((skillArea, index) => {
           const id = Number(skillArea);
           return <SelfAssessmentCard key={index} skillAreaId={id} />;
@@ -28,7 +42,7 @@ export default function SelfAssessmentListItems() {
     );
   }
   return (
-    <div data-testid="assessmentListItems" className={classes.list}>
+    <div data-testid="assessmentListItems" style={{ width: "100%" }}>
       {content}
     </div>
   );

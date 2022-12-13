@@ -7,7 +7,7 @@ export default function SelfAssessmentListHeader({
   userId: User["id"];
 }) {
   return (
-    <Typography variant="h2" data-testid="assessmentListHeader">
+    <Typography variant="h4" component="h2" data-testid="assessmentListHeader">
       List of Assessments (user id: {userId})
     </Typography>
   );

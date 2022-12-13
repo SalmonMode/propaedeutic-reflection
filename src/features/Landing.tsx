@@ -9,7 +9,7 @@ export default function LandingPage() {
     return <a href="/api/auth/signin">Sign in</a>;
   }
   return (
-    <div>
+    <div style={{ margin: "200px" }}>
       <NewSkillArea />
       <AssessmentListView />
     </div>

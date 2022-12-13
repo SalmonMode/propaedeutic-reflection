@@ -13,7 +13,8 @@ import { submitSkillAreaToApi } from "./submitSkillAreaSlice";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: 500,
+    margin: 20,
   },
 });
 
@@ -48,7 +49,11 @@ export default function NewSkillArea() {
     <Card className={classes.root} data-testid="newSkillAreaFormCard">
       <CardContent>
         <div>
-          <Typography variant="h3" data-testid="submitNewSkillAreaHeader">
+          <Typography
+            variant="h5"
+            component="h3"
+            data-testid="submitNewSkillAreaHeader"
+          >
             Submit A New Skill Area
           </Typography>
           <TextField

@@ -10,8 +10,12 @@ export default function SkillAreaCardHeaders({
 }) {
   return (
     <div data-testid={`skillAreaCardHeaders`}>
-      <Typography variant="h3">{title}</Typography>
-      <Typography variant="h4">{description}</Typography>
+      <Typography variant="h5" component="h3">
+        {title}
+      </Typography>
+      <Typography variant="h6" component="h4">
+        {description}
+      </Typography>
     </div>
   );
 }
