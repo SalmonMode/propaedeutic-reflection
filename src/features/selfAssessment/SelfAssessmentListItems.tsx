@@ -1,11 +1,5 @@
 import { makeStyles, Typography } from "@material-ui/core";
 import { useAppSelector } from "../../app/hooks";
-import {
-  SelfAssessmentError,
-  SelfAssessmentForm,
-  SelfAssessmentLoading,
-  SelfAssessmentScored,
-} from "./Cards";
 import SelfAssessmentCard from "./Cards/SelfAssessmentCard";
 
 const useStyles = makeStyles((theme) => ({
