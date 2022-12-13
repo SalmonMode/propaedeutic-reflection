@@ -1,12 +1,11 @@
-import React, { PropsWithChildren } from "react";
-import { render } from "@testing-library/react";
-import type { RenderOptions } from "@testing-library/react";
 import { PreloadedState } from "@reduxjs/toolkit";
-import { Provider } from "react-redux";
-import { SessionProvider } from "next-auth/react";
-import { AppStore, makeStore, RootState } from "../app/store";
-// import type * as _ from "pretty-format";
+import type { RenderOptions } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { Session } from "next-auth";
+import { SessionProvider } from "next-auth/react";
+import React, { PropsWithChildren } from "react";
+import { Provider } from "react-redux";
+import { AppStore, makeStore, RootState } from "../app/store";
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -29,7 +28,6 @@ export function renderWithProvider(
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
-  // const store = makeStore(preloadedState)
   function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
     return <Provider store={store}>{children}</Provider>;
   }
@@ -45,7 +43,6 @@ export function renderWithProviderAndSessionProvider(
     ...renderOptions
   }: ExtendedRenderOptionsWithSession = {}
 ) {
-  // const store = makeStore(preloadedState);
   function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
     return (
       <Provider store={store}>
