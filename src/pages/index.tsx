@@ -9,9 +9,7 @@ const IndexPage: NextPage = () => {
       <Head>
         <title>Propaedeutic Reflection</title>
       </Head>
-      <header>
-        <Landing />
-      </header>
+      <Landing />
     </div>
   );
 };
